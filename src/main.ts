@@ -6,7 +6,7 @@ import * as dotenv from 'dotenv';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptors';
 import { ResultInterceptor } from './common/interceptors/result.interceptors';
-import { ValidationPipe } from '@nestjs/common';
+import { CurrentENV } from './config/env';
 
 async function bootstrap() {
   dotenv.config();
@@ -40,7 +40,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('doc', app, document);
 
-  await app.listen(3000);
+  await app.listen(PORT || CurrentENV.PORT);
 
   const localhost = gerLocalhost();
   console.log('\n', '🚀   Nest Starter Server\n');
